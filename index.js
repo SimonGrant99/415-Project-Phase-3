@@ -9,8 +9,8 @@ const app = express();
 const port = process.env.PORT || 8080;
 var fs = require("fs");
 
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
+app.listen(8080, () => console.log('Server listening on port 4000'))
+console.log('Server started at https://four15-project-d154.onrender.com:' + port);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -338,8 +338,4 @@ app.put('/xml/ticket/:id', async (req, res) => {
     console.error(err);
     res.status(500).send('An error occurred');
   }
-});
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
 });
