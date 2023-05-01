@@ -291,16 +291,19 @@ app.post("/rest/ticket/updateTicket", function(req, res) {
 const xml2js = require('xml2js');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+const bodyParserXML = require('body-parser-xml');
+bodyParserXML(bodyParser);
 
 app.use(bodyParser.json());
 app.use(bodyParser.xml({
-  limit: '1MB',
-  xmlParseOptions: {
-    normalize: true,
-    normalizeTags: true,
-    explicitArray: false,
-  },
-}));
+    limit: '1MB',   
+    xmlParseOptions: {
+      normalize: true,     
+      normalizeTags: true, 
+      explicitArray: false
+    }
+  }));
+  
 
 app.get('/xml/ticket/:id', async (req, res) => {
   try {
