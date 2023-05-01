@@ -39,8 +39,8 @@ app.get("/rest/list/", function(req, res){
 
     async function run() {
         try {
-            const database = client.db("tickets");
-            const ticketDb = database.collection("Ticket Collection");
+            const database = client.db("415-Project");
+            const ticketDb = database.collection("Tickets");
         
             const query = {}; //this means that all tickets are selected
         
@@ -76,8 +76,8 @@ app.get("/rest/ticket/:ticketId", function(req, res) {
 
     async function run() {
         try {
-            const database = client.db("tickets");
-            const ticketDb = database.collection("Ticket Collection");
+            const database = client.db("415-Project");
+            const ticketDb = database.collection("Tickets");
       
             const query = { ticketID: req.params.ticketId };
       
@@ -113,8 +113,8 @@ app.delete("/rest/ticket/:ticketId", function(req, res) {
 
     async function run() {
         try {
-            const database = client.db("tickets");
-            const ticketDb = database.collection("Ticket Collection");
+            const database = client.db("415-Project");
+            const ticketDb = database.collection("Tickets");
       
             const query = { ticketID: req.params.ticketId };
       
@@ -159,8 +159,8 @@ app.post("/rest/ticket/postTicket", function(req, res) {
 
     async function run() {
         try {
-            const database = client.db("tickets");
-            const ticketDb = database.collection("Ticket Collection");
+            const database = client.db("415-Project");
+            const ticketDb = database.collection("Tickets");
 
             const ticketID = req.body.ticketID;
             const created_at = req.body.created_at;
@@ -231,8 +231,8 @@ app.post("/rest/ticket/updateTicket", function(req, res) {
 
     async function run() {
         try {
-            const database = client.db("tickets");
-            const ticketDb = database.collection("Ticket Collection");
+            const database = client.db("415-Project");
+            const ticketDb = database.collection("Tickets");
 
             const ticketID = req.body.ticketID;
             const created_at = req.body.created_at;
