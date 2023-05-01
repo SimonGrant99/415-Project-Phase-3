@@ -303,7 +303,6 @@ app.use(bodyParser.xml({
       explicitArray: false
     }
   }));
-  
 
 app.get('/xml/ticket/:id', async (req, res) => {
   try {
