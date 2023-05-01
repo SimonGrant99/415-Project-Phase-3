@@ -5,7 +5,8 @@ const uri = "mongodb+srv://Your_keys@phase2.wdyjvvd.mongodb.net/test";
 
 const express = require('express');
 const app = express();
-const port = 3000;
+//Changed Port
+const port = process.env.PORT || 8080;
 var fs = require("fs");
 
 app.listen(port);
@@ -284,4 +285,58 @@ app.post("/rest/ticket/updateTicket", function(req, res) {
         }
     }
     run().catch(console.dir);
+});
+
+//Start of Phase 3
+const xml2js = require('xml2js');
+const axios = require('axios');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.xml({
+  limit: '1MB',
+  xmlParseOptions: {
+    normalize: true,
+    normalizeTags: true,
+    explicitArray: false,
+  },
+}));
+
+app.get('/xml/ticket/:id', async (req, res) => {
+  try {
+    const ticketResponse = await axios.get(`https://four15-project-d154.onrender.com/rest/ticket/${req.params.id}`);
+    const ticketJson = ticketResponse.data;
+
+    const xmlBuilder = new xml2js.Builder({ rootName: 'ticket', headless: true });
+    const xml = xmlBuilder.buildObject({ 'ticket': ticketJson });
+
+    res.set('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred');
+  }
+});
+
+app.put('/xml/ticket/:id', async (req, res) => {
+  try {
+    const ticketXml = req.body;
+    const parser = new xml2js.Parser({ explicitArray: false });
+    const ticketJson = await parser.parseStringPromise(ticketXml);
+
+    const ticketResponse = await axios.put(`https://four15-project-d154.onrender.com/rest/ticket/${req.params.id}`, ticketJson);
+
+    const responseXmlBuilder = new xml2js.Builder({ rootName: 'response', headless: true });
+    const responseXml = responseXmlBuilder.buildObject({ 'response': ticketResponse.data });
+
+    res.set('Content-Type', 'text/xml');
+    res.send(responseXml);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred');
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
