@@ -304,7 +304,7 @@ app.use(bodyParser.xml({
     }
   }));
 
-app.get('/xml/ticket/:id', async (req, res) => {
+app.get('/rest/xml/ticket/:id', async (req, res) => {
   try {
     const ticketResponse = await axios.get(`https://four15-project-d154.onrender.com/rest/ticket/${req.params.id}`);
     const ticketJson = ticketResponse.data;
@@ -320,7 +320,7 @@ app.get('/xml/ticket/:id', async (req, res) => {
   }
 });
 
-app.put('/xml/ticket/:id', async (req, res) => {
+app.put('/rest/xml/ticket/:id', async (req, res) => {
   try {
     const ticketXml = req.body;
     const parser = new xml2js.Parser({ explicitArray: false });
